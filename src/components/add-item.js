@@ -1,6 +1,9 @@
 import React from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron'
 
-import {Form, Button} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class AddNewItem extends React.Component {
 
@@ -16,7 +19,8 @@ export class AddNewItem extends React.Component {
     const value = e.target.value;
     const formData = this.state.formData;
     formData[field] = value;
-    this.setState({formData});
+    this.setState({ formData });
+    console.log(this.state);
   }
 
   handleSubmit = (e) => {
@@ -27,19 +31,23 @@ export class AddNewItem extends React.Component {
   render() {
 
     return (
+      <Jumbotron fluid>
       <Form data-testid="add-form" onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Label>Item</Form.Label>
+          <Form.Label>Enter Email</Form.Label>
           <Form.Control type="text" placeholder="Enter email" data-testid="add-form-name" name="name" onChange={this.handleChange} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Description</Form.Label>
           <Form.Control type="text" placeholder="Description" data-testid="add-form-description" name="description" onChange={this.handleChange} />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="success" type="submit">
           Add Item
         </Button>
       </Form>
+      </Jumbotron>
     );
   }
 }
+
+export default AddNewItem;

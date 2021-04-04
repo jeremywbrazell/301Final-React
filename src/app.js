@@ -1,11 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import addItem from './components/add-item.js';
+import AddNewItem from './components/add-item.js'
 import Items from './components/items.js';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import './style.css';
 
-const API_SERVER = process.env.REACT_APP_API;
+const API_SERVER = process.env.REACT_APP_API_SERVER;
 
 class App extends React.Component {
 
@@ -17,8 +16,8 @@ class App extends React.Component {
   }
 
   addItem = async (item) => {
-    await axios.post(`${API_SERVER}/items`, item);
-    this.getItems();
+      await axios.post(`${API_SERVER}/items`, item );
+      this.getItems();
   }
 
   deleteItem = async (id) => {
@@ -34,7 +33,8 @@ class App extends React.Component {
   getItems = async () => {
     const response = await axios.get(`${API_SERVER}/items`);
     const items = response.data;
-    this.setState({items});
+    this.setState({ items });
+    console.log("gettingIttemsyeah", items);
   }
 
   async componentDidMount() {
@@ -43,18 +43,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <>
-      <Form handleAddItem={this.addItem}/> 
-      <h1>Add Items</h1>
-      <Form.Group>
-  <Form.Control size="lg" type="text" placeholder="add item" />
-</Form.Group>
-        <Items handleDelete={this.deleteItem} itemsList={this.state.items} />
-        <div className="buttons">
-        <Button variant="primary">Primary</Button>{' '}
-        <Button variant="danger">Danger</Button> 
-        </div>
-</>
+      <div>
+        <h1>Emails To The Stars</h1>
+        <AddNewItem handleAddItem={this.addItem}/>
+        <hr />
+        <Items handleDelete={this.deleteItem} handleUpdate={this.updateItem} itemsList={this.state.items} />
+      </div>
     );
   }
 }
